@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 
+import logo from "../../assets/images/logo.png";
+
 interface SidebarProps {
   activeItem: string;
   onItemClick: (item: string) => void;
@@ -36,7 +38,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <div className="p-6">
         <div className="flex items-center gap-3 mb-8">
           <img
-            src="../../assets/images/logo.png"
+            src={logo}
             alt="Logo"
             className="w-10 h-10 rounded-lg flex items-center justify-center"
           />
