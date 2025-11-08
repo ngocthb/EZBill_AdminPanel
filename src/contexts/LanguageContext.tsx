@@ -10,13 +10,10 @@ interface LanguageContextType {
 
 const translations = {
   en: {
-    // Navigation
     overview: "Overview",
     user: "User",
     feedback: "Feedback",
     settings: "Settings",
-
-    // Dashboard
     dashboards: "Dashboards",
     search: "Search...",
 
@@ -25,11 +22,8 @@ const translations = {
     premiumUsers: "Premium Users",
     totalUsers: "Total Users",
     activeUsers: "Active Users",
-    newThisMonth: "New This Month",
-    churnRate: "Churn Rate",
-    totalReviews: "Total Reviews",
-    averageRating: "Average Rating",
-    pendingReviews: "Pending Reviews",
+    newThisMonth: "Premium  Users",
+    churnRate: "VIP Users",
 
     // Charts
     userGrowth: "User Growth",
@@ -39,15 +33,17 @@ const translations = {
     userDistribution: "User Distribution",
     breakdownByUserType: "Breakdown by user type",
 
-    // Tables
+    // Tables & common
     userMember: "User Member",
+    userAccounts: "User Accounts",
     userName: "User Name",
     email: "Email",
     phoneNumber: "Phone Number",
+    nickname: "Nickname",
+    role: "Role",
     membership: "Membership",
     participationDay: "Participation Day",
     customerFeedback: "Customer Feedback",
-    user: "User",
     rating: "Rating",
     message: "Message",
     date: "Date",
@@ -57,7 +53,7 @@ const translations = {
     reviewed: "Reviewed",
     resolved: "Resolved",
 
-    // Settings
+    // Auth & settings
     profileSettings: "Profile Settings",
     companyName: "Company Name",
     adminName: "Admin Name",
@@ -102,126 +98,58 @@ const translations = {
     english: "English",
     vietnamese: "Tiếng Việt",
 
-    // Pagination
+    // Pagination / common labels used across components
     rowsPerPage: "Rows per page:",
     showing: "Showing",
     of: "of",
     previous: "Previous",
     next: "Next",
+    Page: "Page",
 
-    // Common
+    // Generic
     labelText: "LABEL TEXT",
     textCell: "Text Cell",
     settingsSaved: "Settings saved successfully!",
 
     // Auth
     logout: "Logout",
-    welcomeBack: "Welcome Back",
-    signInToAccount: "Sign in to your account",
-    enterEmail: "Enter your email",
-    enterPassword: "Enter your password",
-    rememberMe: "Remember me",
-    forgotPassword: "Forgot password?",
-    signIn: "Sign In",
-    demoCredentials: "Demo Credentials",
-    allRightsReserved: "All rights reserved",
-
-    // Settings
-    manageYourAccountSettings: "Manage your account settings and preferences",
-
-    // Settings
-    profileSettings: "Profile Settings",
-    companyName: "Company Name",
-    adminName: "Admin Name",
-    adminEmail: "Admin Email",
-    notificationSettings: "Notification Settings",
-    emailNotifications: "Email Notifications",
-    receiveNotificationsViaEmail: "Receive notifications via email",
-    pushNotifications: "Push Notifications",
-    receivePushNotifications: "Receive push notifications in browser",
-    weeklyReports: "Weekly Reports",
-    receiveWeeklyReports: "Receive weekly analytics reports",
-    securitySettings: "Security Settings",
-    twoFactorAuth: "Two-Factor Authentication",
-    addExtraLayerSecurity: "Add an extra layer of security to your account",
-    sessionTimeout: "Session Timeout (minutes)",
-    appearanceSettings: "Appearance Settings",
-    theme: "Theme",
-    language: "Language",
-    systemSettings: "System Settings",
-    autoBackup: "Auto Backup",
-    automaticallyBackup: "Automatically backup system data",
-    backupFrequency: "Backup Frequency",
-    saveSettings: "Save Settings",
-
-    // Theme options
-    light: "Light",
-    dark: "Dark",
-    auto: "Auto",
-
-    // Time options
-    minutes15: "15 minutes",
-    minutes30: "30 minutes",
-    hour1: "1 hour",
-    hours2: "2 hours",
-
-    // Backup options
-    daily: "Daily",
-    weekly: "Weekly",
-    monthly: "Monthly",
-
-    // Languages
-    english: "English",
-    vietnamese: "Tiếng Việt",
-
-    // Common
-    settingsSaved: "Settings saved successfully!",
-    welcomeBack: "Welcome Back",
-    signInToAccount: "Sign in to your account",
-    enterEmail: "Enter your email",
-    enterPassword: "Enter your password",
-    rememberMe: "Remember me",
-    forgotPassword: "Forgot password?",
-    signIn: "Sign In",
-    demoCredentials: "Demo Credentials",
-    allRightsReserved: "All rights reserved",
-
-    // Notifications
-    notifications: "Notifications",
-    markAllRead: "Mark all as read",
-    noNotifications: "No notifications",
-    markAsRead: "Mark as read",
-    remove: "Remove",
-    viewAllNotifications: "View all notifications",
-    allNotifications: "All Notifications",
-    unreadNotifications: "unread notifications",
-    total: "total",
-    searchNotifications: "Search notifications...",
-    allTypes: "All Types",
-    info: "Info",
-    success: "Success",
-    warning: "Warning",
-    error: "Error",
-    unread: "Unread",
-    read: "Read",
-    noNotificationsFound: "No notifications found",
-    tryAdjustingFilters: "Try adjusting your search or filters",
-
-    // login
     login: "Login",
     password: "Password",
-    rememberMe: "Remember Me",
-    forgotPassword: "Forgot Password?",
-    orSignInWith: "Or sign in with",
+    welcomeBack: "Welcome Back",
+    signInToAccount: "Sign in to your account",
+    enterEmail: "Enter your email",
+    enterPassword: "Enter your password",
+    enterEmailPlaceholder: "Enter your email address",
+    enterPasswordPlaceholder: "Enter your password",
+    rememberMe: "Remember me",
+    forgotPassword: "Forgot password?",
+    signIn: "Sign In",
+    demoCredentials: "Demo Credentials",
+    allRightsReserved: "All rights reserved",
+    invalidCredentials:
+      "Invalid email or password. Only demo accounts are allowed.",
+
+    // Revenue page labels
+    revenue: "Revenue",
+    Revenue: "Revenue",
+    "Revenue Overview": "Revenue Overview",
+    "Total Revenue": "Total Revenue",
+    "Monthly Growth": "Monthly Growth",
+    Source: "Source",
+    Amount: "Amount",
+    monthlyRevenue: "Monthly Revenue",
+    realtimePayments: "Real-time Payments",
+    plan: "Plan",
+    amount: "Amount",
+    Month: "Month",
+    Year: "Year",
+    "Total Amount": "Total Amount",
   },
   vi: {
-    // Navigation
     overview: "Tổng quan",
     user: "Người dùng",
     feedback: "Phản hồi",
     settings: "Cài đặt",
-
-    // Dashboard
     dashboards: "Bảng điều khiển",
     search: "Tìm kiếm...",
 
@@ -230,29 +158,28 @@ const translations = {
     premiumUsers: "Người dùng Premium",
     totalUsers: "Tổng người dùng",
     activeUsers: "Người dùng hoạt động",
-    newThisMonth: "Mới tháng này",
-    churnRate: "Tỷ lệ rời bỏ",
-    totalReviews: "Tổng đánh giá",
-    averageRating: "Đánh giá trung bình",
-    pendingReviews: "Đánh giá chờ xử lý",
+    newThisMonth: "Người dừng premium",
+    churnRate: "Người dùng VIP",
 
     // Charts
     userGrowth: "Tăng trưởng người dùng",
     monthlyUserAcquisition: "Xu hướng thu hút người dùng hàng tháng",
     weeklyRevenue: "Doanh thu tuần",
-    revenueBreakdown: "Phân tích doanh thu theo ngày",
+    revenueBreakdown: "Phân tích doanh thu theo tháng",
     userDistribution: "Phân bố người dùng",
     breakdownByUserType: "Phân tích theo loại người dùng",
 
-    // Tables
+    // Tables & common
     userMember: "Thành viên",
+    userAccounts: "Tài khoản người dùng",
     userName: "Tên người dùng",
     email: "Email",
     phoneNumber: "Số điện thoại",
+    nickname: "Biệt hiệu",
+    role: "Vai trò",
     membership: "Thành viên",
     participationDay: "Ngày tham gia",
     customerFeedback: "Phản hồi khách hàng",
-    user: "Người dùng",
     rating: "Đánh giá",
     message: "Tin nhắn",
     date: "Ngày",
@@ -262,7 +189,7 @@ const translations = {
     reviewed: "Đã xem",
     resolved: "Đã giải quyết",
 
-    // Settings
+    // Auth & settings
     profileSettings: "Cài đặt hồ sơ",
     companyName: "Tên công ty",
     adminName: "Tên quản trị viên",
@@ -307,117 +234,52 @@ const translations = {
     english: "English",
     vietnamese: "Tiếng Việt",
 
-    // Pagination
+    // Pagination / common labels
     rowsPerPage: "Số hàng mỗi trang:",
     showing: "Hiển thị",
     of: "của",
     previous: "Trước",
     next: "Tiếp",
+    Page: "Trang",
 
-    // Common
+    // Generic
     labelText: "NHÃN",
     textCell: "Ô văn bản",
     settingsSaved: "Đã lưu cài đặt thành công!",
 
     // Auth
     logout: "Đăng xuất",
-    welcomeBack: "Chào mừng trở lại",
-    signInToAccount: "Đăng nhập vào tài khoản của bạn",
-    enterEmail: "Nhập email của bạn",
-    enterPassword: "Nhập mật khẩu của bạn",
-    rememberMe: "Ghi nhớ đăng nhập",
-    forgotPassword: "Quên mật khẩu?",
-    signIn: "Đăng nhập",
-    demoCredentials: "Thông tin demo",
-    allRightsReserved: "Bảo lưu mọi quyền",
-
-    // Settings
-    manageYourAccountSettings: "Quản lý cài đặt và tùy chọn tài khoản của bạn",
-
-    // Settings
-    profileSettings: "Cài đặt hồ sơ",
-    companyName: "Tên công ty",
-    adminName: "Tên quản trị viên",
-    adminEmail: "Email quản trị viên",
-    notificationSettings: "Cài đặt thông báo",
-    emailNotifications: "Thông báo Email",
-    receiveNotificationsViaEmail: "Nhận thông báo qua email",
-    pushNotifications: "Thông báo đẩy",
-    receivePushNotifications: "Nhận thông báo đẩy trên trình duyệt",
-    weeklyReports: "Báo cáo tuần",
-    receiveWeeklyReports: "Nhận báo cáo phân tích hàng tuần",
-    securitySettings: "Cài đặt bảo mật",
-    twoFactorAuth: "Xác thực hai yếu tố",
-    addExtraLayerSecurity: "Thêm lớp bảo mật bổ sung cho tài khoản",
-    sessionTimeout: "Thời gian chờ phiên (phút)",
-    appearanceSettings: "Cài đặt giao diện",
-    theme: "Chủ đề",
-    language: "Ngôn ngữ",
-    systemSettings: "Cài đặt hệ thống",
-    autoBackup: "Sao lưu tự động",
-    automaticallyBackup: "Tự động sao lưu dữ liệu hệ thống",
-    backupFrequency: "Tần suất sao lưu",
-    saveSettings: "Lưu cài đặt",
-
-    // Theme options
-    light: "Sáng",
-    dark: "Tối",
-    auto: "Tự động",
-
-    // Time options
-    minutes15: "15 phút",
-    minutes30: "30 phút",
-    hour1: "1 giờ",
-    hours2: "2 giờ",
-
-    // Backup options
-    daily: "Hàng ngày",
-    weekly: "Hàng tuần",
-    monthly: "Hàng tháng",
-
-    // Languages
-    english: "English",
-    vietnamese: "Tiếng Việt",
-
-    // Common
-    settingsSaved: "Đã lưu cài đặt thành công!",
-    welcomeBack: "Chào mừng trở lại",
-    signInToAccount: "Đăng nhập vào tài khoản của bạn",
-    enterEmail: "Nhập email của bạn",
-    enterPassword: "Nhập mật khẩu của bạn",
-    rememberMe: "Ghi nhớ đăng nhập",
-    forgotPassword: "Quên mật khẩu?",
-    signIn: "Đăng nhập",
-    demoCredentials: "Thông tin demo",
-    allRightsReserved: "Bảo lưu mọi quyền",
-
-    // Notifications
-    notifications: "Thông báo",
-    markAllRead: "Đánh dấu tất cả đã đọc",
-    noNotifications: "Không có thông báo",
-    markAsRead: "Đánh dấu đã đọc",
-    remove: "Xóa",
-    viewAllNotifications: "Xem tất cả thông báo",
-    allNotifications: "Tất cả thông báo",
-    unreadNotifications: "thông báo chưa đọc",
-    total: "tổng cộng",
-    searchNotifications: "Tìm kiếm thông báo...",
-    allTypes: "Tất cả loại",
-    info: "Thông tin",
-    success: "Thành công",
-    warning: "Cảnh báo",
-    error: "Lỗi",
-    unread: "Chưa đọc",
-    read: "Đã đọc",
-    noNotificationsFound: "Không tìm thấy thông báo",
-    tryAdjustingFilters: "Thử điều chỉnh tìm kiếm hoặc bộ lọc",
-
-    // login
     login: "Đăng nhập",
     password: "Mật khẩu",
+    welcomeBack: "Chào mừng trở lại",
+    signInToAccount: "Đăng nhập vào tài khoản của bạn",
+    enterEmail: "Nhập email của bạn",
+    enterPassword: "Nhập mật khẩu của bạn",
+    enterEmailPlaceholder: "Nhập địa chỉ email của bạn",
+    enterPasswordPlaceholder: "Nhập mật khẩu của bạn",
     rememberMe: "Ghi nhớ đăng nhập",
     forgotPassword: "Quên mật khẩu?",
-    orSignInWith: "Hoặc đăng nhập với",
+    signIn: "Đăng nhập",
+    demoCredentials: "Thông tin demo",
+    allRightsReserved: "Bảo lưu mọi quyền",
+    invalidCredentials:
+      "Email hoặc mật khẩu không hợp lệ. Chỉ cho phép tài khoản demo.",
+
+    // Revenue page labels
+    revenue: "Doanh thu",
+    Revenue: "Doanh thu",
+    "Revenue Overview": "Tổng quan doanh thu",
+    "Total Revenue": "Tổng doanh thu",
+    "Monthly Growth": "Tăng trưởng tháng",
+    Source: "Nguồn",
+    Amount: "Số tiền",
+    monthlyRevenue: "Doanh thu hàng tháng",
+    realtimePayments: "Thanh toán thời gian thực",
+    plan: "Gói",
+    amount: "Số tiền",
+    Month: "Tháng",
+    Year: "Năm",
+    "Total Amount": "Tổng số tiền",
   },
 };
 

@@ -16,22 +16,28 @@ interface SidebarProps {
   activeItem: string;
   onItemClick: (item: string) => void;
   onLogout: () => void;
+  userRole?: string;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
   activeItem,
   onItemClick,
   onLogout,
+  userRole,
 }) => {
   const { t } = useLanguage();
 
-  const menuItems = [
-    { id: "overview", label: t("overview"), icon: LayoutDashboard },
-    { id: "user", label: t("user"), icon: Users },
-    { id: "feedback", label: t("feedback"), icon: MessageSquare },
-    { id: "notifications", label: t("notifications"), icon: Bell },
-    { id: "settings", label: t("settings"), icon: Settings },
-  ];
+  let menuItems = [] as { id: string; label: string; icon: any }[];
+
+  if (userRole === "REVENUE_ONLY") {
+    menuItems = [{ id: "revenue", label: t("revenue"), icon: MessageSquare }];
+  } else {
+    menuItems = [
+      { id: "overview", label: t("overview"), icon: LayoutDashboard },
+      { id: "user", label: t("user"), icon: Users },
+      { id: "revenue", label: t("revenue"), icon: MessageSquare },
+    ];
+  }
 
   return (
     <div className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen fixed left-0 top-0 transition-colors flex flex-col">
@@ -75,13 +81,12 @@ const Sidebar: React.FC<SidebarProps> = ({
       <div className="mt-auto p-6 border-t border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
             <div>
               <div className="text-sm font-medium text-gray-900 dark:text-white">
-                ByeWind
+                EzBill
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400">
-                © 2023 ByeWind
+                © 2025 EzBill
               </div>
             </div>
           </div>
