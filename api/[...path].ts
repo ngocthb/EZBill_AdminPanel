@@ -1,16 +1,35 @@
 export default async function handler(req: any, res: any) {
   try {
-    // Xử lý path: lấy phần sau /api
-    let urlPath = req.url?.replace(/^\/api/, "") || ""; // loại bỏ /api
-    const url = `http://160.187.0.231:5000${urlPath}`; // không thêm /api nữa
+    // Lấy path sau /api
+    const urlPath = req.url?.replace(/^\/api/, "") || "";
+    const url = `http://160.187.0.231:5000${urlPath}`;
+
+    // Copy headers, loại bỏ host để backend không nhầm
+    const headers: any = { ...req.headers };
+    delete headers.host;
+
+    // Xử lý body
+    let body: any;
+    if (!["GET", "HEAD"].includes(req.method)) {
+      if (req.headers["content-type"]?.includes("application/json")) {
+        body = JSON.stringify(req.body);
+      } else {
+        body = req.body;
+      }
+    }
 
     const response = await fetch(url, {
       method: req.method,
-      headers: req.headers as any,
-      body: ["GET", "HEAD"].includes(req.method) ? undefined : req.body,
+      headers,
+      body,
     });
 
-    const data = await response.text();
+    // Trả về JSON nếu có
+    const contentType = response.headers.get("content-type") || "";
+    const data = contentType.includes("application/json")
+      ? await response.json()
+      : await response.text();
+
     res.status(response.status).send(data);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
