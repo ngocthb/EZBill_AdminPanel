@@ -1,8 +1,10 @@
 export default async function handler(req: any, res: any) {
   try {
-    // Lấy path sau /api
+    // Lấy path sau /api (GIỮ NGUYÊN query params)
     const urlPath = req.url?.replace(/^\/api/, "") || "";
     const url = `http://160.187.0.231:5000${urlPath}`;
+
+    console.log("Proxying to:", url); // Debug log
 
     // Copy headers, loại bỏ host để backend không nhầm
     const headers: any = { ...req.headers };
@@ -32,6 +34,7 @@ export default async function handler(req: any, res: any) {
 
     res.status(response.status).send(data);
   } catch (error: any) {
+    console.error("Proxy error:", error);
     res.status(500).json({ error: error.message });
   }
 }
