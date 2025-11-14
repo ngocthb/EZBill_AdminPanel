@@ -12,6 +12,17 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import axiosInstance from "../../api/axiosConfig";
 
+interface Payment {
+  paymentHistoryModelId: string;
+  userId: string;
+  planId: string;
+  email: string;
+  planName: string;
+  amount: number;
+  paymentDate: string;
+  status: string;
+}
+
 const RevenueChart: React.FC = () => {
   const { t } = useLanguage();
   const { isDark } = useTheme();
@@ -22,28 +33,44 @@ const RevenueChart: React.FC = () => {
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const data = (await axiosInstance.get(
-          "/dashboard/payments/month-nearest?month=6"
-        )) as unknown as {
-          payments: { month: number; totalAmount: number }[];
-        };
+        const data = (await axiosInstance.get<Payment[]>(
+          "/payment"
+        )) as unknown as Payment[];
         console.log(data);
 
-        const currentMonth = new Date().getMonth() + 1; // Get current month (1-12)
-        const allMonths = Array.from({ length: 6 }, (_, i) => {
-          const month = currentMonth - i;
-          return month > 0 ? month : 12 + month; // Handle year wrap-around
-        }).reverse(); // Ensure months are in ascending order
+        // Group payments by month and calculate total revenue
+        const revenueByMonth: { [key: string]: number } = {};
 
-        const formattedData = allMonths.map((month) => {
-          const payment = data.payments.find((p) => p.month === month);
+        data.forEach((payment) => {
+          if (payment.status === "COMPLETED") {
+            const date = new Date(payment.paymentDate);
+            const month = date.getMonth() + 1; // 1-12
+            const year = date.getFullYear();
+            const key = `${year}-${month}`;
+
+            if (!revenueByMonth[key]) {
+              revenueByMonth[key] = 0;
+            }
+            revenueByMonth[key] += payment.amount;
+          }
+        });
+
+        // Get last 6 months
+        const currentDate = new Date();
+        const chartData = Array.from({ length: 6 }, (_, i) => {
+          const date = new Date(currentDate);
+          date.setMonth(date.getMonth() - (5 - i));
+          const month = date.getMonth() + 1;
+          const year = date.getFullYear();
+          const key = `${year}-${month}`;
+
           return {
             name: `Tháng ${month}`,
-            revenue: payment ? payment.totalAmount : 0,
+            revenue: revenueByMonth[key] || 0,
           };
         });
 
-        setChartData(formattedData);
+        setChartData(chartData);
       } catch (error) {
         console.error("Failed to fetch chart data:", error);
       }
