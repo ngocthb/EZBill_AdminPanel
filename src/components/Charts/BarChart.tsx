@@ -22,12 +22,12 @@ const RevenueChart: React.FC = () => {
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const response = await axiosInstance.get(
+        const data = (await axiosInstance.get(
           "/dashboard/payments/month-nearest?month=6"
-        );
-        const data = response.data as {
+        )) as unknown as {
           payments: { month: number; totalAmount: number }[];
         };
+        console.log(data);
 
         const currentMonth = new Date().getMonth() + 1; // Get current month (1-12)
         const allMonths = Array.from({ length: 6 }, (_, i) => {

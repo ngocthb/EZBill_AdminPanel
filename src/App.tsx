@@ -13,7 +13,7 @@ import StatCardSkeleton from "./components/StatCardSkeleton";
 import AllNotificationsPage from "./components/AllNotificationsPage";
 import RevenuePage from "./components/RevenuePage";
 import { useLanguage } from "./contexts/LanguageContext";
-
+import axiosInstance from "./api/axiosConfig";
 interface User {
   accountId: string;
   email: string;
@@ -37,11 +37,20 @@ function App() {
   } | null>(null);
 
   useEffect(() => {
-    fetch("http://160.187.0.231:5000/api/accounts")
-      .then((response) => response.json())
-      .then((data) => setUserData(data))
-      .catch((error) => console.error("Error fetching user data:", error));
+    handleFetchData();
   }, []);
+
+  const handleFetchData = async () => {
+    try {
+      const data = (await axiosInstance.get<User[]>(
+        "/accounts"
+      )) as unknown as User[];
+
+      setUserData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleLogin = (user: {
     accountId?: string;

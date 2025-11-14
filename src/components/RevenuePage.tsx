@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../api/axiosConfig";
-import RevenueTable from "./RevenueTable";
+
 import RealtimePaymentTable from "./RealtimePaymentTable";
 import { useLanguage } from "../contexts/LanguageContext";
 

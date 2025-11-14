@@ -28,7 +28,7 @@ const translations = {
     // Charts
     userGrowth: "User Growth",
     monthlyUserAcquisition: "Monthly user acquisition trends",
-    weeklyRevenue: "Weekly Revenue",
+    weeklyRevenue: "Weekly transaction",
     revenueBreakdown: "Revenue breakdown by day",
     userDistribution: "User Distribution",
     breakdownByUserType: "Breakdown by user type",
@@ -126,13 +126,12 @@ const translations = {
     signIn: "Sign In",
     demoCredentials: "Demo Credentials",
     allRightsReserved: "All rights reserved",
-    invalidCredentials:
-      "Invalid email or password. Only demo accounts are allowed.",
+    invalidCredentials: "Invalid email or password.",
 
     // Revenue page labels
-    revenue: "Revenue",
-    Revenue: "Revenue",
-    "Revenue Overview": "Revenue Overview",
+    revenue: "Transaction",
+    Revenue: "Transaction",
+    "Revenue Overview": "Transaction Overview",
     "Total Revenue": "Total Revenue",
     "Monthly Growth": "Monthly Growth",
     Source: "Source",
@@ -165,7 +164,7 @@ const translations = {
     userGrowth: "Tăng trưởng người dùng",
     monthlyUserAcquisition: "Xu hướng thu hút người dùng hàng tháng",
     weeklyRevenue: "Doanh thu tuần",
-    revenueBreakdown: "Phân tích doanh thu theo tháng",
+    revenueBreakdown: "Phân tích Doanh thu theo tháng",
     userDistribution: "Phân bố người dùng",
     breakdownByUserType: "Phân tích theo loại người dùng",
 
@@ -262,14 +261,13 @@ const translations = {
     signIn: "Đăng nhập",
     demoCredentials: "Thông tin demo",
     allRightsReserved: "Bảo lưu mọi quyền",
-    invalidCredentials:
-      "Email hoặc mật khẩu không hợp lệ. Chỉ cho phép tài khoản demo.",
+    invalidCredentials: "Email hoặc mật khẩu không hợp lệ.",
 
     // Revenue page labels
     revenue: "Doanh thu",
     Revenue: "Doanh thu",
     "Revenue Overview": "Tổng quan doanh thu",
-    "Total Revenue": "Tổng doanh thu",
+    "Total Revenue": "Tổng Doanh thu",
     "Monthly Growth": "Tăng trưởng tháng",
     Source: "Nguồn",
     Amount: "Số tiền",

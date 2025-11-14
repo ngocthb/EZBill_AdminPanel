@@ -1,13 +1,17 @@
 import React, { useEffect, useState, useCallback } from "react";
-import * as signalR from "@microsoft/signalr";
+// import * as signalR from "@microsoft/signalr";
 import { useLanguage } from "../contexts/LanguageContext";
+import axiosInstance from "../api/axiosConfig";
 
 interface Payment {
+  paymentHistoryModelId: string;
+  userId: string;
+  planId: string;
   email: string;
   planName: string;
   amount: number;
   paymentDate: string;
-  status: boolean | string;
+  status: string;
 }
 
 const RealtimePaymentTable: React.FC = () => {
@@ -16,35 +20,32 @@ const RealtimePaymentTable: React.FC = () => {
   const [connectionStatus, setConnectionStatus] =
     useState<string>("Connecting...");
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const BASE_URL = "http://160.187.0.231:5000";
-  const API_URL = `${BASE_URL}/api/payment`;
-  const HUB_URL = `${BASE_URL}/paymentHub`;
-  const HUB_EVENT = "PaymentsUpdated";
-  const JOIN_GROUP_METHOD = "JoinAdminGroup";
+  // const HUB_URL = `${BASE_URL}/paymentHub`;
+  // const HUB_EVENT = "PaymentsUpdated";
+  // const JOIN_GROUP_METHOD = "JoinAdminGroup";
 
-  const getStatusBadge = (status: boolean | string) => {
-    let text = status.toString();
+  const getStatusBadge = (status: string) => {
+    let text = status;
     let classes = "px-2 py-0.5 rounded-full text-xs font-medium ";
 
-    if (status === true) text = "Success";
-    if (status === false) text = "Failed";
-
-    switch (text.toLowerCase()) {
-      case "success":
-      case "true":
+    switch (status.toUpperCase()) {
+      case "COMPLETED":
         classes +=
           "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+        text = "Completed";
         break;
-      case "pending":
+      case "PENDING":
         classes +=
           "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+        text = "Pending";
         break;
-      case "failed":
-      case "false":
+      case "FAILED":
         classes += "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+        text = "Failed";
         break;
       default:
         classes +=
@@ -54,13 +55,13 @@ const RealtimePaymentTable: React.FC = () => {
   };
 
   const fetchAllPayments = useCallback(async () => {
-    console.log(`Calling API '${API_URL}'...`);
+    setIsLoading(true);
     try {
-      const response = await fetch(API_URL);
-      if (!response.ok) {
-        throw new Error(`API call failed: ${response.status}`);
-      }
-      const data = await response.json();
+      const data = (await axiosInstance.get<Payment[]>(
+        "/payment"
+      )) as unknown as Payment[];
+
+      console.log(data);
 
       // Sort: newest first
       const sortedPayments = data.sort(
@@ -70,65 +71,72 @@ const RealtimePaymentTable: React.FC = () => {
 
       setPayments(sortedPayments);
       setIsError(false);
+      setConnectionStatus("Data loaded successfully");
     } catch (error) {
       console.error("Error fetching payments:", error);
       setIsError(true);
       setConnectionStatus("Error loading data. Check console.");
+    } finally {
+      setIsLoading(false);
     }
-  }, [API_URL]);
-
+  }, []);
   useEffect(() => {
-    let connection: signalR.HubConnection | null = null;
+    // Fetch initial data without SignalR
+    fetchAllPayments();
+  }, []);
 
-    const startConnection = async () => {
-      setConnectionStatus("Connecting to SignalR...");
-      setIsError(false);
-      console.log(`Attempting to connect to Hub: ${HUB_URL}`);
+  // useEffect(() => {
+  //   let connection: signalR.HubConnection | null = null;
 
-      connection = new signalR.HubConnectionBuilder()
-        .withUrl(HUB_URL)
-        .withAutomaticReconnect()
-        .build();
+  //   const startConnection = async () => {
+  //     setConnectionStatus("Connecting to SignalR...");
+  //     setIsError(false);
+  //     console.log(`Attempting to connect to Hub: ${HUB_URL}`);
 
-      // Listen for payment updates
-      connection.on(HUB_EVENT, () => {
-        console.log(`Received '${HUB_EVENT}' ping! Refetching data...`);
-        setConnectionStatus("Payment update received! Refreshing...");
-        fetchAllPayments();
-      });
+  //     connection = new signalR.HubConnectionBuilder()
+  //       .withUrl(HUB_URL)
+  //       .withAutomaticReconnect()
+  //       .build();
 
-      try {
-        await connection.start();
-        console.log("SignalR Connected.");
-        setConnectionStatus("Connected. Joining admin group...");
+  //     // Listen for payment updates
+  //     connection.on(HUB_EVENT, () => {
+  //       console.log(`Received '${HUB_EVENT}' ping! Refetching data...`);
+  //       setConnectionStatus("Payment update received! Refreshing...");
+  //       fetchAllPayments();
+  //     });
 
-        // Join admin group
-        await connection.invoke(JOIN_GROUP_METHOD);
-        console.log("Joined admin group.");
-        setConnectionStatus("Connected & Listening for updates");
-        setIsError(false);
+  //     try {
+  //       await connection.start();
+  //       console.log("SignalR Connected.");
+  //       setConnectionStatus("Connected. Joining admin group...");
 
-        // Fetch initial data
-        await fetchAllPayments();
-      } catch (err: any) {
-        console.error("SignalR Connection Error: ", err);
-        setConnectionStatus(`Connection Error: ${err.message}. Retrying...`);
-        setIsError(true);
+  //       // Join admin group
+  //       await connection.invoke(JOIN_GROUP_METHOD);
+  //       console.log("Joined admin group.");
+  //       setConnectionStatus("Connected & Listening for updates");
+  //       setIsError(false);
 
-        // Retry after 5 seconds
-        setTimeout(startConnection, 5000);
-      }
-    };
+  //       // Fetch initial data
+  //       await fetchAllPayments();
+  //     } catch (err: any) {
+  //       console.error("SignalR Connection Error: ", err);
+  //       setConnectionStatus(`Connection Error: ${err.message}. Retrying...`);
+  //       setIsError(true);
 
-    startConnection();
+  //       // Retry after 5 seconds
+  //       setTimeout(startConnection, 5000);
+  //     }
+  //   };
 
-    // Cleanup on unmount
-    return () => {
-      if (connection) {
-        connection.stop();
-      }
-    };
-  }, [HUB_URL, HUB_EVENT, JOIN_GROUP_METHOD, fetchAllPayments]);
+  //   startConnection();
+
+  //   // Cleanup on unmount
+  //   return () => {
+  //     if (connection) {
+  //       connection.stop();
+  //     }
+  //   };
+  // }, [HUB_URL, HUB_EVENT, JOIN_GROUP_METHOD, fetchAllPayments]);
 
   // Pagination logic
   const totalPages = Math.ceil(payments.length / rowsPerPage);
@@ -150,13 +158,13 @@ const RealtimePaymentTable: React.FC = () => {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 transition-colors">
       {/* Status Bar */}
-      <div
+      {/* <div
         className={`px-6 py-3 rounded-t-lg text-white font-medium ${
           isError ? "bg-red-500" : "bg-green-500"
         }`}
       >
         {connectionStatus}
-      </div>
+      </div> */}
 
       {/* Table Header */}
       <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
@@ -215,7 +223,7 @@ const RealtimePaymentTable: React.FC = () => {
                 </td>
               </tr>
             ) : (
-              currentPayments.map((payment, index) => {
+              currentPayments.map((payment) => {
                 const { text: statusText, classes: statusClasses } =
                   getStatusBadge(payment.status);
                 const formattedAmount = new Intl.NumberFormat("vi-VN", {
@@ -228,7 +236,7 @@ const RealtimePaymentTable: React.FC = () => {
 
                 return (
                   <tr
-                    key={index}
+                    key={payment.paymentHistoryModelId}
                     className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   >
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
