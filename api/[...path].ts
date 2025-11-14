@@ -1,19 +1,23 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import fetch from "node-fetch";
-
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: any, res: any) {
   try {
     // Lấy path phía sau /api/
-    const path = req.url?.replace("/api/", "") || "";
-    const url = `http://160.187.0.231:5000/api/${path}`;
+    const urlPath = req.url?.replace(/^\/api\//, "") || "";
 
-    // Gửi request đến backend
+    // Lấy query string
+    const queryString = req.url?.split("?")[1] || "";
+
+    const url = `http://160.187.0.231:5000/api/${urlPath}${
+      queryString ? "?" + queryString : ""
+    }`;
+
+    // Forward request
     const response = await fetch(url, {
       method: req.method,
       headers: req.headers as any,
-      body: req.method !== "GET" ? req.body : undefined,
+      body: ["GET", "HEAD"].includes(req.method) ? undefined : req.body,
     });
 
+    // Forward status + data
     const data = await response.text();
     res.status(response.status).send(data);
   } catch (error: any) {
