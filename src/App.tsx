@@ -64,7 +64,8 @@ function App() {
       setIsLoggedIn(true);
       setIsLoading(false);
       // if user can only view revenue, navigate there
-      if (user.role === "REVENUE_ONLY") setActiveMenuItem("revenue");
+      // For revenue-only users show the dashboard (overview) but limit content
+      if (user.role === "REVENUE_ONLY") setActiveMenuItem("overview");
     }, 500);
   };
 
@@ -159,29 +160,38 @@ function App() {
         return (
           <>
             {/* Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
+            <div
+              className={`grid grid-cols-1 ${
+                currentUser?.role === "REVENUE_ONLY"
+                  ? "lg:grid-cols-1"
+                  : "lg:grid-cols-2"
+              } gap-6 `}
+            >
               <RevenueChart />
-              <UserDistributionChart
-                data={[
-                  { name: "Free Users", value: freeUsers, color: "#60A5FA" },
-                  {
-                    name: "Basic Users",
-                    value: basicUsers,
-                    color: "#A78BFA",
-                  },
-                  {
-                    name: "Premium Users",
-                    value: premiumUsers,
-                    color: "#34D399",
-                  },
-                  { name: "VIP Users", value: vipUsers, color: "#F59E0B" },
-                  {
-                    name: "Daily Users",
-                    value: dailyUsers,
-                    color: "#F97316",
-                  },
-                ]}
-              />
+
+              {currentUser?.role !== "REVENUE_ONLY" && (
+                <UserDistributionChart
+                  data={[
+                    { name: "Free Users", value: freeUsers, color: "#60A5FA" },
+                    {
+                      name: "Basic Users",
+                      value: basicUsers,
+                      color: "#A78BFA",
+                    },
+                    {
+                      name: "Premium Users",
+                      value: premiumUsers,
+                      color: "#34D399",
+                    },
+                    { name: "VIP Users", value: vipUsers, color: "#F59E0B" },
+                    {
+                      name: "Daily Users",
+                      value: dailyUsers,
+                      color: "#F97316",
+                    },
+                  ]}
+                />
+              )}
             </div>
           </>
         );

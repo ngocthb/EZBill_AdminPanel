@@ -30,7 +30,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   let menuItems = [] as { id: string; label: string; icon: any }[];
 
   if (userRole === "REVENUE_ONLY") {
-    menuItems = [{ id: "revenue", label: t("revenue"), icon: MessageSquare }];
+    // Keep overview visible for revenue-only users but limit other items
+    menuItems = [
+      { id: "overview", label: t("overview"), icon: LayoutDashboard },
+      { id: "revenue", label: t("revenue"), icon: MessageSquare },
+    ];
   } else {
     menuItems = [
       { id: "overview", label: t("overview"), icon: LayoutDashboard },
