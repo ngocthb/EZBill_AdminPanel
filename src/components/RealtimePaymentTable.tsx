@@ -230,9 +230,6 @@ const RealtimePaymentTable: React.FC = () => {
                   style: "currency",
                   currency: "VND",
                 }).format(payment.amount);
-                const formattedDate = new Date(
-                  payment.paymentDate
-                ).toLocaleString("vi-VN");
 
                 return (
                   <tr
@@ -249,7 +246,7 @@ const RealtimePaymentTable: React.FC = () => {
                       {formattedAmount}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
-                      {formattedDate}
+                      {payment.paymentDate}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <span className={statusClasses}>{statusText}</span>
